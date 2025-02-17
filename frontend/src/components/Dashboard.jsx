@@ -3,6 +3,37 @@ import axios from "axios";
 
 import { useLocation } from "react-router-dom";
 
+
+const TopSongsSection = ({topTracks}) => {
+
+
+  return (
+    <div>
+        {/* make three buttons here for various time periods like  */}
+        <h1>Top Songs</h1>
+
+        
+        <div className="flex items-center justify-center">
+          <button className="bg-white text-black px-4 py-2 rounded-md">4 weeks</button>
+          <button className="bg-white text-black px-4 py-2 rounded-md">6 months</button>
+          <button className="bg-white text-black px-4 py-2 rounded-md">1 Year</button>
+        </div>
+
+          <h2 className="text-lg font-semibold mt-6">Top Songs</h2>
+      {topTracks.length > 0 ? (
+        <ul className="mt-2">
+          {topTracks.map(track => (
+            <li key={track.id} className="mt-2 flex items-center">
+              <img src={track.album.images?.[0]?.url} alt={track.name} className="w-12 h-12 rounded-full mr-2" />
+              {track.name} - {track.artists.map(artist => artist.name).join(", ")}
+            </li>
+          ))}
+        </ul>
+      ) : <p>Loading top songs...</p>}
+    </div>
+  )
+}
+
 const Dashboard = () => {
   const location = useLocation();
   const [accessToken, setAccessToken] = useState(localStorage.getItem("spotify_access_token") || "");
@@ -61,17 +92,27 @@ const Dashboard = () => {
     }
   };
   return (
-    <div className="p-10">
-      <h1 className="text-xl font-bold">Welcome to Your Dashboard</h1>
+    <div className="p-10 bg-black text-white">
+
+
+      {/* Intro Section */}
+      <div className="flex flex-col items-center justify-between">
+      <h1 className="text-5xl font-bold">Welcome to Your Dashboard</h1>
 
       {userData ? (
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold">Hello, {userData.display_name}!</h2>
+        <div className="mt-4 flex items-center justify-evenly border-2 border-white rounded-lg p-4">
+          <div className="flex items-center justify-center border-2 border-white rounded-full p-4">
           <img src={userData.images?.[0]?.url} alt="Profile" className="w-24 h-24 rounded-full mt-2" />
+          </div>
+          <div className="flex flex-col items-center justify-center border-2 border-white rounded-lg p-4">
+          <h2 className="text-lg font-semibold">Hello, {userData.display_name}!</h2>
           <p>Email: {userData.email}</p>
           <p>Followers: {userData.followers.total}</p>
+          </div>
         </div>
       ) : <p>Loading user data...</p>}
+
+      </div>
 
       <h2 className="text-lg font-semibold mt-6">Top Artists</h2>
       {topArtists.length > 0 ? (
@@ -84,18 +125,8 @@ const Dashboard = () => {
           ))}
         </ul>
       ) : <p>Loading top artists...</p>}
-          {/* Top Songs */}
-          <h2 className="text-lg font-semibold mt-6">Top Songs</h2>
-      {topTracks.length > 0 ? (
-        <ul className="mt-2">
-          {topTracks.map(track => (
-            <li key={track.id} className="mt-2 flex items-center">
-              <img src={track.album.images?.[0]?.url} alt={track.name} className="w-12 h-12 rounded-full mr-2" />
-              {track.name} - {track.artists.map(artist => artist.name).join(", ")}
-            </li>
-          ))}
-        </ul>
-      ) : <p>Loading top songs...</p>}
+
+      <TopSongsSection topTracks={topTracks} />
 
       {/* Recent Listening History */}
       <h2 className="text-lg font-semibold mt-6">Recently Played</h2>
@@ -111,7 +142,7 @@ const Dashboard = () => {
       ) : <p>Loading recent tracks...</p>}
 
       
-    </div>
+    </div> 
 
 
   );

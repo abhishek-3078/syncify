@@ -27,6 +27,7 @@ app.get("/auth/login", (req, res) => {
     redirect_uri: REDIRECT_URI,
     scope,
   })}`;
+  console.log(authUrl);
 
   res.redirect(authUrl);
 });
