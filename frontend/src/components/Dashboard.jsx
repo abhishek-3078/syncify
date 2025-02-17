@@ -10,7 +10,7 @@ const TopSongsSection = ({topTracks}) => {
   return (
     <div>
         {/* make three buttons here for various time periods like  */}
-        <h1>Top Songs</h1>
+        <h1 className="text-2xl font-bold">Top Songs Here</h1>
 
         
         <div className="flex items-center justify-center">
@@ -19,7 +19,6 @@ const TopSongsSection = ({topTracks}) => {
           <button className="bg-white text-black px-4 py-2 rounded-md">1 Year</button>
         </div>
 
-          <h2 className="text-lg font-semibold mt-6">Top Songs</h2>
       {topTracks.length > 0 ? (
         <ul className="mt-2">
           {topTracks.map(track => (
