@@ -12,13 +12,16 @@ const {AddArtist} = require('./AddArtist')
 
 const Login = (req, res) => {
     const scope = [
-        "user-read-private",
-        "user-read-email",
-        "user-top-read",         // ✅ Needed for top songs & artists
-        "user-read-recently-played", // ✅ Needed for recent listening history
-        "playlist-read-private", // ✅ If you want to read user playlists
-        "user-library-read",     // ✅ If you want to access saved songs
-        "user-read-playback-state", // ✅ Needed for currently playing song
+      "user-read-private",
+      "user-read-email",
+      "user-top-read",         // ✅ Needed for top songs & artists
+      "user-read-recently-played", // ✅ Needed for recent listening history
+      "playlist-read-private", // ✅ Read user's private playlists
+      "playlist-read-collaborative", // ✅ Read collaborative playlists
+      "playlist-modify-public", // ✅ Create & modify public playlists
+      "playlist-modify-private", // ✅ Create & modify private playlists
+      "user-library-read",     // ✅ Access saved songs
+      "user-read-playback-state", // ✅ Needed for currently playing song
     ].join(" ");
     const authUrl = `https://accounts.spotify.com/authorize?${querystring.stringify({
         client_id: CLIENT_ID,
