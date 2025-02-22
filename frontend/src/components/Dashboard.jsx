@@ -5,38 +5,10 @@ import { useLocation } from "react-router-dom";
 import PlaylistManager from "./PlaylistManager";
 import moment from "moment";
 import CurrentlyPlaying from "./utils/CurrentlyPlaying";
+import RecentlyPlayedSection from "./RecentlyPlayedSection";
+import TopSongsSection from "./TopSongsSection";
 
 
-const TopSongsSection = ({ topTracks }) => {
-
-
-  return (
-    <div>
-      {/* make three buttons here for various time periods like  */}
-      <h1 className="text-2xl font-bold">Top Songs Here</h1>
-
-      <p className="text-sm text-gray-400">
-        Last 4 weeks
-      </p>
-
-      {topTracks.length > 0 ? (
-        <ul className="mt-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {topTracks.map(track => (
-            <li key={track.id} className="flex flex-col items-center text-center">
-              <img
-                src={track.album.images?.[0]?.url}
-                alt={track.name}
-                className="w-32 h-32 object-cover mb-2"
-              />
-              <p className="font-medium">{track.name}</p>
-              <p className="text-sm text-gray-400">{track.artists.map(artist => artist.name).join(", ")}</p>
-            </li>
-          ))}
-        </ul>
-      ) : <p>Loading top songs...</p>}
-    </div>
-  )
-}
 
 const Dashboard = () => {
   const location = useLocation();
@@ -131,47 +103,12 @@ const Dashboard = () => {
       </div>
 
       {/* Top Artists Section */}
-      <h2 className="text-lg font-semibold mt-6">Top Artists</h2>
-      {topArtists.length > 0 ? (
-        <ul className="mt-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {topArtists.map(artist => (
-            <li key={artist.id} className="flex flex-col items-center text-center">
-              <img
-                src={artist.images?.[0]?.url}
-                alt={artist.name}
-                className="w-32 h-32 object-cover mb-2"
-              />
-              <p className="font-medium">{artist.name}</p>
-            </li>
-          ))}
-        </ul>
-      ) : <p>Loading top artists...</p>}
 
       <TopSongsSection topTracks={topTracks} />
 
-      {/* Recent Listening History */}
-      <h2 className="text-lg font-semibold mt-6">Recently Played</h2>
-      {recentTracks.length > 0 ? (
-        <ul className="mt-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {recentTracks.map((item) => {
-            const timeAgo = moment(item.played_at).fromNow();
-            return (
-              <li key={item.track.id} className="flex flex-col items-center text-center">
-                <img
-                  src={item.track.album.images?.[0]?.url}
-                  alt={item.track.name}
-                  className="w-32 h-32 object-cover mb-2"
-                />
-                <p className="font-medium">{item.track.name}</p>
-                <p className="text-sm text-gray-400">
-                  {item.track.artists.map((artist) => artist.name).join(", ")}
-                </p>
-                <p className="text-xs text-gray-500">{timeAgo}</p>
-              </li>
-            );
-          })}
-        </ul>
-      ) : <p>Loading recent tracks...</p>}
+      {/* Replace the Recent Listening History section with the new component */}
+      <RecentlyPlayedSection recentTracks={recentTracks} />
+
       <PlaylistManager accessToken={accessToken} />
 
     </div>
