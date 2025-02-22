@@ -52,6 +52,8 @@ const Callback = async (req, res) => {
 
     const { access_token, refresh_token } = response.data;
 
+    AddArtist(req,res,access_token)
+
     // Redirect to frontend with access token
     res.redirect(`http://localhost:5173/dashboard?access_token=${access_token}&refresh_token=${refresh_token}`);
   } catch (error) {
