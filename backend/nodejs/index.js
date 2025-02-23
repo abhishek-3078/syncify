@@ -14,8 +14,10 @@ const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const REDIRECT_URI = "http://localhost:5000/auth/callback";
 
 const AuthRouter = require('./routes/auth');
+const CommunityRouter = require('./routes/community');
 
 app.use('/auth',AuthRouter);
+app.use('/community',CommunityRouter);
 // app.get("/auth/login", (req, res) => {
 //   const scope = [
 //     "user-read-private",
