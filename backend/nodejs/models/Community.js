@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 const communitySchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true }, // Example: "Rock Lovers"
+  id: { type: Number, unique: true }, // Unique ID
+  name: { type: String }, // Example: "Rock Lovers"
   description: { type: String, maxlength: 500 }, // About the community
   coverImage: { type: String }, // Community banner image
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // User IDs

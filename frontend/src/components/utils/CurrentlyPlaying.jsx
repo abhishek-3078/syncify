@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const CurrentlyPlaying = () => {
-  const [currentTrack, setCurrentTrack] = useState(null);
-  const [accessToken, setAccessToken] = useState(localStorage.getItem("spotify_access_token") || "");
+const CurrentlyPlaying = ({currentTrack}) => {
 
-  useEffect(() => {
-    axios.get("https://api.spotify.com/v1/me/player/currently-playing", {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    })
-      .then(response => {
-        if (response.data && response.data.item) {
-          setCurrentTrack(response.data.item);
-        }
-      })
-      .catch(error => console.error("Error fetching current song:", error));
-  }, [accessToken]);
-
+  
   return (
     <div className="p-4 bg-gray-800 rounded-lg shadow-lg text-center">
       {currentTrack ? (

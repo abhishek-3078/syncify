@@ -1,27 +1,31 @@
 const express = require("express");
 const Post = require("../models/Post");
 const Community = require("../models/Community");
-const { checkAuth } = require("../middleware/authMiddleware");
+const { checkAuth } = require("../middleware/auth");
+const { GetPosts } = require("../controllers/Community");
 
 const router = express.Router();
 
-router.post("/create", checkAuth, async (req, res) => {
+router.post("/posts", checkAuth, async (req, res) => {
   try {
-    const { communityId, content, image, audio, tags } = req.body;
-    const userId = req.user.id; // Extracted from JWT
-
+    const { communityId,title, content, image, audio, tags } = req.body;
+    const userId = req.userid; // Extracted from JWT
     // 1️⃣ Check if community exists
-    const community = await Community.findById(communityId);
+    let community = await Community.findById(communityId);
     if (!community) {
-      return res.status(404).json({ message: "Community not found" });
+      community = new Community({name:"Karan Aujla"});
+      await community.save();
+      
     }
+    console.log(userId)
+    
 
     // 2️⃣ Create a new post
     const newPost = new Post({
-      userId,
-      username: req.user.username, // Assuming `username` is in JWT payload
-      communityId,
+      user:userId,
+      community: communityId,
       content,
+      title,
       image,
       audio,
       tags,
@@ -38,5 +42,8 @@ router.post("/create", checkAuth, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+router.get("/posts", GetPosts);
+
 
 module.exports = router;

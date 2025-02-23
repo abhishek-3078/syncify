@@ -1,16 +1,12 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-  userId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", // Who created the post
     required: true,
   },
-  username: {
-    type: String,
-    required: true,
-  },
-  communityId: {
+  community: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Community", // Which community the post belongs to
     required: true,
@@ -24,6 +20,9 @@ const postSchema = new mongoose.Schema({
   },
   audio: {
     type: String, // Optional audio URL
+  },
+  title:{
+    type:String
   },
   likes: [
     {

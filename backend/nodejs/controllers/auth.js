@@ -1,6 +1,8 @@
 // const connection = require('../config/database');
 // const { StatusCodes } = require('http-status-codes')
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
+
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const REDIRECT_URI = "http://localhost:5000/auth/callback";
@@ -29,6 +31,7 @@ const Login = (req, res) => {
         redirect_uri: REDIRECT_URI,
         scope,
     })}`;
+    console.log("redirected");
 
     res.redirect(authUrl);
 }
@@ -51,11 +54,13 @@ const Callback = async (req, res) => {
     });
 
     const { access_token, refresh_token } = response.data;
-
-    AddArtist(req,res,access_token)
+    
+    await AddArtist(req,res,access_token)
+    
+    const jwtToken = jwt.sign({user_id:req.user._id,spotify_id:req.user.spotify_id}, "abhishek", { expiresIn: "1h" });
 
     // Redirect to frontend with access token
-    res.redirect(`http://localhost:5173/dashboard?access_token=${access_token}&refresh_token=${refresh_token}`);
+    res.redirect(`http://localhost:5173/user?access_token=${access_token}&token=${jwtToken}`);
   } catch (error) {
     res.status(500).send("Error getting tokens: " + error);
   }
