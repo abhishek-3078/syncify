@@ -6,6 +6,7 @@ const TopArtistsSection = ({ topArtists }) => {
   return (
     <div className="mt-8 bg-transparent p-4 rounded-lg">
       <h2 className="text-3xl font-bold text-white">Top Artists</h2>
+      <p className="text-sm text-gray-400 mb-4">Last 4 weeks</p>
       {topArtists.length > 0 ? (
         <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {topArtists.map(artist => (

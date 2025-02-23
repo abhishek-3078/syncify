@@ -15,23 +15,23 @@ const Soulmates = () => {
       <h3 className="text-xl font-semibold mb-4">Soulmates</h3>
       <ul className="w-full space-y-3">
         {matches.map((match, index) => (
-          <li
-            key={index}
-            className="w-full cursor-pointer hover:bg-gray-700 p-1 rounded-lg"
-            onClick={() => navigate(`/profile/${match.name.toLowerCase()}`)}
-          >
-            <div className="flex justify-between mb-1 ">
-              <span className="font-medium hover:text-blue-400 transition duration-300">
-                {match.name}
-              </span>
-              <span className="text-sm">{match.percentage}%</span>
+          <li key={index} className="w-full flex items-center justify-between">
+            <div className="flex flex-col w-full">
+              <span className="font-medium">{match.name}</span>
+              <div className="relative w-full bg-gray-700 rounded-md h-2 mt-1">
+                <div
+                  className="bg-blue-500 h-2 rounded-md"
+                  style={{ width: `${match.percentage}%` }}
+                ></div>
+              </div>
+              <span className="text-xs text-gray-400">{match.percentage}% Match</span>
             </div>
-            <div className="w-full bg-gray-700 rounded-full h-2.5">
-              <div
-                className="bg-blue-500 h-2.5 rounded-full transition-all duration-300"
-                style={{ width: `${match.percentage}%` }}
-              ></div>
-            </div>
+            <button
+              className="bg-blue-500 text-white px-3 py-1 ml-4 rounded-md hover:bg-blue-600 transition cursor-pointer duration-300"
+              onClick={() => navigate(`/profile/${match.name.toLowerCase()}`)}
+            >
+              Connect
+            </button>
           </li>
         ))}
       </ul>
