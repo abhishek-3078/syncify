@@ -7,6 +7,9 @@ const querystring = require("querystring");
 const app = express();
 app.use(cors());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const connectDB = require('./db/connect')
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
