@@ -28,7 +28,7 @@ const Soulmates = () => {
             </div>
             <button
               className="bg-blue-500 text-white px-3 py-1 ml-4 rounded-md hover:bg-blue-600 transition cursor-pointer duration-300"
-              onClick={() => navigate(`/profile/${match.name.toLowerCase()}`)}
+              onClick={() => navigate(`/user/31d5hbigmyqh3hmbxly672dqhe2m`)}
             >
               Connect
             </button>

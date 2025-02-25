@@ -60,7 +60,12 @@ const Callback = async (req, res) => {
     const jwtToken = jwt.sign({user_id:req.user._id,spotify_id:req.user.spotify_id}, "abhishek", { expiresIn: "1h" });
 
     // Redirect to frontend with access token
-    res.redirect(`http://localhost:5173/user?access_token=${access_token}&token=${jwtToken}`);
+    res.cookie("auth_token", "abhishek_spotify", {
+      httpOnly: true,  // Prevents client-side access
+      secure: true,
+      sameSite: "None" 
+  });
+    res.redirect(`http://localhost:5173/user/${req.user.username}?access_token=${access_token}&token=${jwtToken}`);
   } catch (error) {
     res.status(500).send("Error getting tokens: " + error);
   }

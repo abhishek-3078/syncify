@@ -19,6 +19,7 @@ const AddArtist = async (req, res,access_token) => {
             // Create a new user document if not found
             user = await User.create({
               spotify_id: SpotifyUser.id,
+              username: SpotifyUser.id,
               display_name: SpotifyUser.display_name,
               email: SpotifyUser.email,
               country: SpotifyUser.country,

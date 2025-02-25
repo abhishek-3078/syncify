@@ -14,7 +14,12 @@ const CommunityPage = () => {
   useEffect(() => {
     // Fetch posts from backend
     const communityId='67bb04579424255e5ef69d80';
-    fetch(`${BACKEND_API}/community/posts?id=${communityId}`)
+    fetch(`${BACKEND_API}/community/posts?id=${communityId}`,{
+      method:'GET',
+      credentials: 'include',
+    }
+      
+    )
       .then(res => res.json())
       .then(data => setPosts(data.posts))
       .catch(err => console.log(err));
@@ -52,7 +57,7 @@ const CommunityPage = () => {
         <h1 className="text-2xl font-bold mb-4 text-white">Karan Aujla</h1>
   
         {/* Post Form */}
-        <form onSubmit={handleSubmit} className=" bg-gray-800 mb-6 p-4 border rounded shadow">
+        <form onSubmit={handleSubmit} className=" bg-gray-800 mb-6 p-4  rounded shadow">
           <h2 className="text-lg  font-semibold mb-2 text-gray-400">Create a Post</h2>
           <input
             type="text"

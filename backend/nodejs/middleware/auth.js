@@ -4,7 +4,6 @@ const checkAuth = (req, res, next) => {
   try {
     // Extract the token from headers (commonly sent as 'Authorization: Bearer <token>')
     const authHeader = req.headers.authorization;
-    console.log(authHeader)
     if (!authHeader) {
       return res.status(401).json({ message: "Authorization token missing or invalid" });
     }
@@ -14,8 +13,7 @@ const checkAuth = (req, res, next) => {
     // Verify and decode the token
     const decoded = jwt.verify(token, "abhishek"); // Use an environment variable for security
 
-    // Attach user information to request object
-    req.userid = decoded.user_id;
+    req.userId = decoded.user_id;
 
     next(); // Proceed to the next middleware or route handler
   } catch (error) {

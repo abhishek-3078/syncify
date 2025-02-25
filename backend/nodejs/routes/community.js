@@ -4,12 +4,12 @@ const Community = require("../models/Community");
 const { checkAuth } = require("../middleware/auth");
 const { GetPosts } = require("../controllers/Community");
 
-const router = express.Router();
+const router = express.Router(); 
 
 router.post("/posts", checkAuth, async (req, res) => {
   try {
     const { communityId,title, content, image, audio, tags } = req.body;
-    const userId = req.userid; // Extracted from JWT
+    const userId = req.userId; 
     // 1️⃣ Check if community exists
     let community = await Community.findById(communityId);
     if (!community) {

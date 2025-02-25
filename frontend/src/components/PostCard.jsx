@@ -10,7 +10,7 @@ const PostCard = ({ post }) => {
   };
 
   return (
-    <div className="border p-4 rounded-lg shadow-lg mb-4 bg-gray-900">
+    <div className=" p-4 rounded-lg shadow-lg mb-4 bg-gray-900">
       <div className="flex space-x-3 text-lg text-white">
         <div className="w-10 h-10 bg-gray-400 rounded-full">
 

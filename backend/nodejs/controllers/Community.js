@@ -3,6 +3,7 @@ const Community = require("../models/Community");
 
 const GetPosts= async (req, res) => {
     const communityId=req.query.id;
+    console.log(req.cookies.auth_token)
     try {
         const community = await Community.findById(communityId)
         .populate({
@@ -13,7 +14,7 @@ const GetPosts= async (req, res) => {
             }
         });
         const posts = community.posts;
-        console.log(posts)
+        // console.log(posts)
         res.status(200).json({ posts });
     } catch (error) {
         console.error("Error fetching posts:", error.message);

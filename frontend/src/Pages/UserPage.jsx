@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-import { useLocation } from "react-router-dom";
+import { BACKEND_API } from "../const";
+import { useLocation ,useParams} from "react-router-dom";
 import PlaylistManager from "../components/PlaylistManager";
 import moment from "moment";
 import CurrentlyPlaying from "../components/utils/CurrentlyPlaying";
@@ -9,9 +9,11 @@ import TopSongsSection from "../components/TopSongsSection";
 import RecentlyPlayedSection from "../components/RecentlyPlayedSection";
 import TopArtistsSection from "../components/TopArtistsSection";
 import Soulmates from "../components/Soulmates";
+import FavouriteArtistSection from "../components/FavouriteArtistSection";
 
 const UserPage = () => {
     const location = useLocation();
+    const {username}=useParams();
     const [accessToken, setAccessToken] = useState("");
     const [userData, setUserData] = useState({});
     const [topArtists, setTopArtists] = useState([]);
@@ -38,15 +40,16 @@ const UserPage = () => {
     useEffect(() => {
         if (!accessToken) return;
 
-        // Fetch User Profile
-        axios.get("https://api.spotify.com/v1/me", {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        })
-            .then(response => {
-                console.log(response)
-                setUserData(response.data)
+        // Fetch User Data
+
+        axios.get(`${BACKEND_API}/me?username=${username}`, {
+            headers: { Authorization: `${localStorage.getItem("jwt")}` },
+        }).then(response => {
+                
+                setUserData(response.data.user)
             })
-            .catch(error => handleTokenError(error));
+            .catch(error => handleTokenError(error)
+        )
 
         // Fetch Top Artists
         axios.get("https://api.spotify.com/v1/me/top/artists?limit=5", {
@@ -104,13 +107,14 @@ const UserPage = () => {
                 {/* User Details Obtained From Spotify */}
                 <div className="w-[60%] flex h-full items-center justify-center gap-4 p-4 bg-gray-900 rounded-lg shadow-lg">
                     <div className="w-[200px] h-[200px] rounded-full overflow-hidden border-4 border-gray-700">
-                        <img src={userData.images?.[0]?.url} alt="Profile image" className="w-full h-full object-cover"/>
+                        <img src={userData.images?.[0]} alt="Profile image" className="w-full h-full object-cover"/>
                     </div>
                     <div className="flex flex-col items-start justify-center gap-2">
                         <h1 className="text-3xl text-white font-bold">{userData.display_name}</h1>
+                        <h2 className="text-lg text-gray-400">@{userData.username}</h2>
                         <h2 className="text-lg text-gray-400">{userData.email}</h2>
                         <h3 className="text-lg text-gray-400">10 Friends</h3>
-                        <h4 className="text-lg text-gray-400">Plan</h4>
+                        <h4 className="text-lg text-gray-400">2232 minutes streamed</h4>
                     </div>
                 </div>
 
@@ -124,6 +128,8 @@ const UserPage = () => {
                 </div>
             </div>
 
+
+            <FavouriteArtistSection topArtists={topArtists} />
             <TopArtistsSection topArtists={topArtists} />
             <TopSongsSection topTracks={topTracks} />
             <RecentlyPlayedSection recentTracks={recentTracks} />

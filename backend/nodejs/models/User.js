@@ -17,11 +17,13 @@ const userSchema = new mongoose.Schema({
         total: { type: Number, default: 0 }
     },
     href: { type: String },
-    images: { type: [String], default: [] }, // Assuming images are stored as URLs
+    images: { type: [String], default: [] }, 
     product: { type: String },
     type: { type: String },
     uri: { type: String },
+    username:{type:String,unique:true},
     created_at: { type: Date, default: Date.now }
 });;
 
 module.exports = mongoose.model("User", userSchema);
+ 
